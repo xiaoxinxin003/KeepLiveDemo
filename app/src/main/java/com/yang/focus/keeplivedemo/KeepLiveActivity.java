@@ -16,11 +16,12 @@ import android.view.WindowManager;
 
 public class KeepLiveActivity extends Activity {
     private static final String TAG = "KeepLiveActivity";
+    static KeepLiveActivity instance = new KeepLiveActivity();
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
         super.onCreate(savedInstanceState, persistentState);
-
+        instance = this;
     }
 
     @Override
