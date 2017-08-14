@@ -10,6 +10,13 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        ndk{
+            moduleName "MyLibrary"
+        }
+        sourceSets.main{
+            jni.srcDirs = []
+            jniLibs.srcDirs "src/main/libs"
+        }
         externalNativeBuild {
             cmake {
                 cppFlags ""
@@ -22,6 +29,8 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+
 }
 
 dependencies {
