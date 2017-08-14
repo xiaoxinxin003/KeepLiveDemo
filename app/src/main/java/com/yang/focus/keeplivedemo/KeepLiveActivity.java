@@ -10,23 +10,19 @@ import android.view.Gravity;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.yang.focus.keeplivedemo.mgr.AppManager;
+
 /**
  * Created by focus on 2017/8/12.
  */
 
 public class KeepLiveActivity extends Activity {
     private static final String TAG = "KeepLiveActivity";
-    static KeepLiveActivity instance = new KeepLiveActivity();
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
-        super.onCreate(savedInstanceState, persistentState);
-        instance = this;
-    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        AppManager.addActivity(this);
         Log.d(TAG, "KeepLiveActivity is created");
 
         Window window = getWindow();

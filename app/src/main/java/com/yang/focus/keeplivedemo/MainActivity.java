@@ -1,5 +1,6 @@
 package com.yang.focus.keeplivedemo;
 
+import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -10,14 +11,15 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import com.yang.focus.keeplivedemo.event.ScreenActionEvent;
+import com.yang.focus.keeplivedemo.mgr.AppManager;
 import com.yang.focus.keeplivedemo.utils.RxBus;
 
 import java.util.List;
+import java.util.Stack;
 
 import rx.functions.Action1;
 
 public class MainActivity extends AppCompatActivity {
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,18 +46,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void finishKeepLiveActivity() {
-        if (KeepLiveActivity.instance != null) {
-            KeepLiveActivity.instance.finish();
-        }
 //        ActivityManager manager=(ActivityManager)this.getSystemService(Context.ACTIVITY_SERVICE);
 //        List<ActivityManager.RunningTaskInfo> info=manager.getRunningTasks(1);
 //        String classname = null;
 //        if (null != info && !(info.isEmpty())) {
 //            classname = info.get(0).topActivity.getClassName();
 //            if (classname.equals("com.yang.focus.keeplivedemo.KeepLiveActivity")) {
-//                KeepLiveActivity.instance.finish();
+//
 //            }
 //        }
+        AppManager.finishActivity(KeepLiveActivity.class);
     }
 
     private void startKeepLiveActivity() {
