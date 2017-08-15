@@ -8,9 +8,12 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.yang.focus.keeplivedemo.event.ScreenActionEvent;
+import com.yang.focus.keeplivedemo.intf.CJMListener;
 import com.yang.focus.keeplivedemo.mgr.AppManager;
 import com.yang.focus.keeplivedemo.utils.RxBus;
 
@@ -19,7 +22,7 @@ import java.util.Stack;
 
 import rx.functions.Action1;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements CJMListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +32,13 @@ public class MainActivity extends AppCompatActivity {
         // Example of a call to a native method
         TextView tv = (TextView) findViewById(R.id.sample_text);
         initScreenLockEvent();
-        tv.setText(new MyNdk().getString());
+        tv.setText(new MyNdk(this).getString());
+        findViewById(R.id.display_button_activity_main).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new MyNdk(MainActivity.this).displaySomething();
+            }
+        });
     }
 
     private void initScreenLockEvent() {
@@ -47,15 +56,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void finishKeepLiveActivity() {
-//        ActivityManager manager=(ActivityManager)this.getSystemService(Context.ACTIVITY_SERVICE);
-//        List<ActivityManager.RunningTaskInfo> info=manager.getRunningTasks(1);
-//        String classname = null;
-//        if (null != info && !(info.isEmpty())) {
-//            classname = info.get(0).topActivity.getClassName();
-//            if (classname.equals("com.yang.focus.keeplivedemo.KeepLiveActivity")) {
-//
-//            }
-//        }
         AppManager.finishActivity(KeepLiveActivity.class);
     }
 
@@ -67,5 +67,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void finish() {
         super.finish();
+    }
+
+    @Override
+    public void displayMessage(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 }
